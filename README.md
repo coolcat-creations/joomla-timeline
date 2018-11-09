@@ -1,6 +1,8 @@
 # joomla-timeline
 This menutype for a category shows article items in a gantt diagramm.
 
+![demo](https://raw.githubusercontent.com/coolcat-creations/joomla-timeline/master/gantt.png)
+
 ## Usage
 1) Copy the timeline.php and timeline.xml file into your frontend template in 
 yourtemplate/html/com_content/category 
