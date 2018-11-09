@@ -76,7 +76,8 @@ $afterDisplayContent = trim(implode("\n", $results));
 	<div class="gantt">
 		<div class="gantt__row gantt__row--months">
 			<div class="gantt__row-first"></div>
-			<?php
+
+			<?php /*Display the Months of a year */
 			for ($m = 1; $m <= 12; $m++) {
 				$month = date('F', mktime(0, 0, 0, $m, 1, date('Y'))); ?>
 
@@ -88,9 +89,10 @@ $afterDisplayContent = trim(implode("\n", $results));
 
 		<div class="gantt__row gantt__row--lines">
 
-			<?php $aktuellermonat = date('m');
-			for ($monat = 0; $monat < 12; $monat++) { ?>
-				<span <?php if ($monat == $aktuellermonat) : echo 'class="marker"'; endif; ?>></span>
+			<?php /* Get the current month and highlight it */
+			$currentmonth = date('m');
+			for ($monthcolumn = 0; $monthcolumn < 12; $monthcolumn++) { ?>
+				<span <?php if ($monthcolumn == $currentmonth) : echo 'class="marker"'; endif; ?>></span>
 			<?php } ?>
 
 		</div>
@@ -99,19 +101,19 @@ $afterDisplayContent = trim(implode("\n", $results));
 		<?php foreach ($this->lead_items as &$item) :
 
 			$this->item = &$item;
-			$eintraege = json_decode($this->item->jcfields[1]->rawvalue);
+			$entries = json_decode($this->item->jcfields[1]->rawvalue);
 			?>
 
-			<div class="gantt__row <?php if (empty($eintraege)) : echo 'gantt__row--empty'; endif; ?>">
+			<div class="gantt__row <?php /* add a class if no entry is added */ if (empty($entries)) : echo 'gantt__row--empty'; endif; ?>">
 
 				<div class="gantt__row-first">
 					<?php echo $this->item->title ?>
 				</div>
 
 				<ul class="gantt__row-bars">
-						<?php foreach ($eintraege as $eintrag) : ?>
-							<li style="grid-column: <?php echo $eintrag->von; ?>/<?php echo $eintrag->bis; ?>; background-color: <?php echo $eintrag->farbe; ?>;"
-							    class="<?php echo $eintrag->klasse; ?>"><?php echo $eintrag->text; ?></li>
+						<?php /* show the entries */ foreach ($entries as $entry) : ?>
+							<li style="grid-column: <?php echo $entry->from; ?>/<?php echo $entry->to; ?>; background-color: <?php echo $entry->color; ?>;"
+							    class="<?php echo $entry->class; ?>"><?php echo $entry->text; ?></li>
 						<?php endforeach; ?>
 				</ul>
 
